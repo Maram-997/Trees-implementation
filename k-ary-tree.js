@@ -1,6 +1,6 @@
 class Node
     {
-        constructor(key) { // key - value
+        constructor(key) { 
            this.child = [];
            this.key = key;
         }

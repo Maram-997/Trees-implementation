@@ -46,19 +46,17 @@ class BibnarySearchTree {
         }
         return current.data;
     }
-    find(data) {
-        let current = this.root;
-        while (current.data !== data) {
-            if (data < current.data) {
-                current = current.left;
-            } else {
-                current = current.right;
-            }
-            if (current === null) {
-                return null;
-            }
+    search(node, data) {
+        if (node === null) {
+            return null;
+        } else if (data < node.data) {
+            return this.search(node.left, data)
+        } else if (data > node.data) {
+            return this.search(node.right, value)
+        } else {
+            return node;
         }
-        return current;
+
     }
     isPresent(data) {
         let current = this.root;
@@ -74,42 +72,47 @@ class BibnarySearchTree {
         }
         return false;
     }
+
     remove(data) {
-        const removeNode = function (node, data) {
-            if (node == null) {
-                return null;
-            }
-            if (data == node.data) {
-                // node has no children 
-                if (node.left == null && node.right == null) {
-                    return null;
-                }
-                // node has no left child 
-                if (node.left == null) {
-                    return node.right;
-                }
-                // node has no right child 
-                if (node.right == null) {
-                    return node.left;
-                }
-                // node has two children 
-                var tempNode = node.right;
-                while (tempNode.left !== null) {
-                    tempNode = tempNode.left;
-                }
-                node.data = tempNode.data;
-                node.right = removeNode(node.right, tempNode.data);
-                return node;
-            } else if (data < node.data) {
-                node.left = removeNode(node.left, data);
-                return node;
-            } else {
-                node.right = removeNode(node.right, data);
-                return node;
-            }
-        }
-        this.root = removeNode(this.root, data);
+        this.root = this.removeNode(this.root, data);
     }
+    removeNode(node, key) {
+        if (node === null)
+            return null;
+
+        else if (key < node.data) {
+            node.left = this.removeNode(node.left, key);
+            return node;
+        }
+        else if (key > node.data) {
+            node.right = this.removeNode(node.right, key);
+            return node;
+        }
+        else {
+            // deleting node with no children
+            if (node.left === null && node.right === null) {
+                node = null;
+                return node;
+            }
+            // deleting node with one children
+            if (node.left === null) {
+                node = node.right;
+                return node;
+            }
+            else if (node.right === null) {
+                node = node.left;
+                return node;
+            }
+            // Deleting node with two children
+            var aux = this.findMinNode(node.right);
+            node.data = aux.data;
+
+            node.right = this.removeNode(node.right, aux.data);
+            return node;
+        }
+
+    }
+
     isBalanced() {
         return (this.findMinHeight() >= this.findMaxHeight() - 1)
     }
