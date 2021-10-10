@@ -102,7 +102,7 @@ class BinaryTree {
     fizzBuzz = (tree) => {
         let current = tree.root;
         let result = [];
-        if (!current) return -1;
+        if (!current) return null;
         let recrusive = (node) => {
           if (node.value % 3 == 0 && node.value % 5 == 0) {
             node.value = "fizzBuzz";
@@ -143,47 +143,32 @@ const sumOddNumbers = (node) =>  {
         }
     };
     oddNum(this.root);
-    let sum = 0;
-    for (let i = 0; i < result.length; i++) {
-        sum += result[i];
-    }
-    return sum;
+    let summation = result.reduce((acc,cur)=> acc + cur,0)
+    return summation
 }
 
 // code challenge class 19 - second question
-const Comparing=(T1,T2)=>{
-    if(!T1.root) return 'there is no node in tree one '
-    if(!T2.root) return 'there is no node in tree two '
-    let current1 =T1.root
-    let current2=T2.root
+const combare = (node1, node2) =>{
+    if (!node1) return null
+    if (!node2) return null
    
-    let sum1=0
-    let sum2=0
+    let sum1 = 0;
+    let sum2 = 0;
+    let recrusive1 = (node) => {
+        if (node === 'file') sum1++
+        if(node.left) recrusive1(node.left)
+        if(node.right) recrusive1(node.right)
+}
+let recrusive2 = (node) => {
+    if (node === 'file') sum2++
+    if(node.left) recrusive2(node.left)
+    if(node.right) recrusive2(node.right)
+}
 
-    let trevers=(node)=>{
-        if(node.value!=='folder'){
-            sum1++
-        }
-        if(node.left) trevers(node.left)
-        if(node.right) trevers(node.right)
-    }
-    let trevers2=(node)=>{
-        if(node.value!=='folder'){
-            sum2++
-        }
-        if(node.left) trevers2(node.left)
-        if(node.right) trevers2(node.right)
-    }
+recrusive1(node1)
+recrusive2(node2)
 
-    trevers(current1)
+if(sum1===sum2) return true
+else return false
     
-    trevers2(current2)
-    
-
-    if(sum2===sum1){
-        return true
-    }else{
-        return false
-    } 
-
 }
